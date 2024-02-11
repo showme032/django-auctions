@@ -1,0 +1,84 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+  <div class="listed-item">
+    <h4>Listing: {{ listing.title }}</h4>
+    <img src="{{ listing.image }}" alt="", width="300">
+    <div>{{ listing.description }}</div>
+    <div>Highest bid: {{ listing.price }}€</div>
+
+    <!--check if the cliend is logged-in-->
+    {% if user.is_authenticated %}
+        <!--if the user is auctionner, enable closing the auction-->
+        {% if user == listing.auctioneer %}
+            {% if listing.active == True %}
+                <form action="{% url 'close' listing.id%}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Close the bidding">
+                </form>
+
+                {% else %}
+                    <h4>Congrats, you sold item to {{ listing_bid.bidder }} for the price of {{ listing_bid.price }}€!</h4>
+
+            {% endif %}
+
+        <!--otherwise, enable bidding and adding/removing the idem from a watchlist-->
+        {% elif user != listing.auctioneer %}
+            <!--enable bidding/wathclist if the listing is still active-->
+            {% if listing.active == True %}
+                <!--bid for item-->
+                <form action="{% url 'bid' listing.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                    <input type="number" name="user_bid" maxlength="10" min="{{ listing.price }}" step=".01" placeholder="Bid more than {{ listing.price }}">
+                    <input type="submit" value="Place the bid">
+                </form>
+
+                <!--add/remove item from watchlist-->
+                <form action="{% url 'watch' listing.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                    <!-- {% if listing not in user.watchlist.all %}
+                        <input type="hidden" name="added" value="False">
+                        <input type="submit" value="Watch">
+
+                    {% else %}
+                        <input type="hidden" name="added" value="True">
+                        <input type="submit" value="Unwatch">
+
+                    {% endif %} -->
+                </form>
+
+                <!--enable the users to comment on listing-->
+                <form action="{% url 'comment' listing.id %}" autocomplete="off" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                    <input type="text" name="comment_text" placeholder="Comment on listing ">
+                    <input type="submit" value="Post Comment">
+                </form>
+
+            <!--otherwise if the winner is viewing the page, display a message-->
+            {% else %}
+                <div>
+                    <h5>The auction for the item is closed!</h5>
+                </div>
+                <div>
+                    {% if listing_bid.bidder == user %}
+                        <h4>Congrats, you'we won the bidding with the price of {{ listing_bid.price }}€!</h4>
+                    {% endif %}
+                </div>
+
+            {% endif %}
+        {% endif %}
+
+    {% else %}
+        <h4>
+            Please sign-in in order to bid for item
+        </h4>
+    {% endif %}
+
+    {% for comment in comments %}
+        <li> {{ comment.user }}: {{ comment.comment_text }}</li>
+    {% endfor %}
+  </div>
+{% endblock %}

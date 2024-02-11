@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h5>
+        Watched listings:
+    </h5>
+
+    {% for listing in watched_items %}
+        <li>
+            <a href="{% url 'listing' listing.id %}">
+                <li>
+                    <img src="{{ listing.image }}" alt="", width="150">
+                    <h5>{{ listing.title }}</h5>
+                    <div>Current bidding price: {{ listing.price }}€</div>
+                    <div>{{ listing.description }}</div>           
+                </li>
+            </a>
+        </li>
+    {% endfor %}
+
+{% endblock %}

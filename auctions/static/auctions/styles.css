@@ -1,0 +1,100 @@
+body {
+    /* padding: 10px; */
+}
+
+.rounded-navbar {
+    border-radius: 50px;
+}
+
+.container-nav {
+    width: 100%;
+}
+
+nav.navbar {
+    width: 100%;
+    padding: 8px 44px;
+    /* padding-left: 44px; */
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.navbar-brand{
+    margin: 0;
+
+    &>h2 {
+        text-align: center;
+        color: #0E1F47;
+    }
+}
+.navbar li {
+    font-size: 1.2rem;
+}
+
+li.navbar-text {
+    margin-right: 16px;
+}
+a.nav-link {
+    color: #0E1F47;
+
+    &:hover {
+        color: #244FB2;
+    }
+}
+
+.page-title {
+    margin: 24px;
+}
+
+.container-lg {
+    margin: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.text-start {
+    margin-left: 12px;
+}
+
+.form-container {
+    padding-top: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form-container .form-header {
+    padding-bottom: 16px;
+}
+.form-container div {
+    margin-top: 8px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+}
+input {
+    margin-bottom: 8px;
+    border: 1px solid darkgray;
+    border-radius: 6px;
+}
+form .btn-primary {
+    margin-top: 8px;
+}
+.form-container .form-footer {
+    margin-top: 32px;
+}
+
+
+.all-listings{
+    margin-top: -16px;
+}
+div.listed-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & >h4 {
+        margin: 24px;
+    }
+    & >img {
+        margin-bottom: 24px;
+    }
+}

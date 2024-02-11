@@ -1,0 +1,31 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <div class="container-lg m-3 w-100">
+        <div class="page-title">
+            <p class="h2">Active Listings</p>
+        </div>
+        <div class="all-listings">
+          {% for listing in listings %}
+              {% if listing.active == True %}
+                  <div class="card m-3 p-1 rounded-3 border-1 shadow-sm" style="max-width: 540px;">
+                      <div class="row g-0">
+                          <div class="col-md-4 border border-1 rounded-3 shadow-sm">
+                              <img src="{{ listing.image }}" class="img-fluid rounded-3" style="max-height: 250px;"  alt="...">
+                          </div>
+                          <div class="col-md-8">
+                              <div class="card-body">
+                                  <h5 class="card-title">{{ listing.title }}</h5>
+                                  <p class="card-text">{{ listing.description }}</p>
+                                  <p class="card-text">Current bidding price: {{ listing.price }}€</p>
+                                  <a href="{% url 'listing' listing.id %}" class="btn btn-primary shadow">Bid For Item!</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              {% endif %}
+          {% endfor %}
+        </div>
+    </div>
+{% endblock %}
